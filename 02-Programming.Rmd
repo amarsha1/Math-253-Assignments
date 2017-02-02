@@ -1,8 +1,46 @@
 # In-Class Programming Activity, Day 2
 
-Your work goes here ...
+Aveline Marshall
 
+<br>
 
+## Task 1
+```{r}
+#download.file("http://www-bcf.usc.edu/~gareth/ISL/Auto.csv", destfile="Auto.csv")
+auto_file_name = "/home/local/MAC/amarsha1/MACHINE LEARNING/Math-253-AssignmentsSSH/Auto.csv"
+```
+
+<br>
+
+## Task 2
+
+```{r}
+Auto = read.csv("/home/local/MAC/amarsha1/MACHINE LEARNING/Math-253-AssignmentsSSH/Auto.csv")
+```
+
+<br>
+
+## Task 3
+
+```{r}
+task3 = summary(Auto$horsepower)
+```
+
+<br>
+
+## Task 4
+
+```{r}
+library(ISLR)
+```
+
+<br>
+
+## Task 5
+
+```{r}
+
+```
 
 ## Test statements
 
