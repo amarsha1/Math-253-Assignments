@@ -121,98 +121,102 @@ $(document).ready(function () {
 
 <div id="in-class-programming-activity-day-1" class="section level1">
 <h1>In-Class Programming Activity, Day 1</h1>
-<p>Your work goes here … # In-Class Programming Activity, Day 1</p>
 <div id="aveline-marshall" class="section level2">
 <h2>Aveline Marshall</h2>
 <p><br> <br></p>
 </div>
 <div id="task-1" class="section level2">
 <h2>Task 1</h2>
-<pre class="r"><code>library(mosaicData)</code></pre>
+<pre class="r"><code>library(mosaic)</code></pre>
+<pre><code>## Loading required package: dplyr</code></pre>
+<pre><code>## 
+## Attaching package: 'dplyr'</code></pre>
+<pre><code>## The following objects are masked from 'package:stats':
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## Loading required package: car</code></pre>
+<pre><code>## 
+## Attaching package: 'car'</code></pre>
+<pre><code>## The following object is masked from 'package:dplyr':
+## 
+##     recode</code></pre>
+<pre><code>## Loading required package: mosaicData</code></pre>
+<pre><code>## 
+## Attaching package: 'mosaic'</code></pre>
+<pre><code>## The following object is masked from 'package:car':
+## 
+##     logit</code></pre>
+<pre><code>## The following objects are masked from 'package:dplyr':
+## 
+##     count, do, tally</code></pre>
+<pre><code>## The following objects are masked from 'package:stats':
+## 
+##     binom.test, cor, cov, D, fivenum, IQR, median, prop.test,
+##     quantile, sd, t.test, var</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     max, mean, min, prod, range, sample, sum</code></pre>
 <p><br></p>
 </div>
 <div id="task-2" class="section level2">
 <h2>Task 2</h2>
 <pre class="r"><code>String = &quot;Today is&quot;
 currentDate =  date()
-paste(String, currentDate)</code></pre>
-<pre><code>## [1] &quot;Today is Thu Jan 26 13:25:10 2017&quot;</code></pre>
+task2=paste(String, currentDate)</code></pre>
 <p><br></p>
 </div>
 <div id="task-3a" class="section level2">
 <h2>Task 3a</h2>
-<pre class="r"><code>names(Galton)</code></pre>
-<pre><code>## [1] &quot;family&quot; &quot;father&quot; &quot;mother&quot; &quot;sex&quot;    &quot;height&quot; &quot;nkids&quot;</code></pre>
+<pre class="r"><code>task3a = names(Galton)</code></pre>
 <p><br></p>
 </div>
 <div id="task-3b" class="section level2">
 <h2>Task 3b</h2>
-<pre class="r"><code>dim(Galton)</code></pre>
-<pre><code>## [1] 898   6</code></pre>
+<pre class="r"><code>task3b = dim(Galton)</code></pre>
 <p><br></p>
 </div>
 <div id="task-3c" class="section level2">
 <h2>Task 3c</h2>
-<pre class="r"><code>mean(Galton$height)</code></pre>
-<pre><code>## [1] 66.76069</code></pre>
+<pre class="r"><code>task3c = mean(Galton$height)</code></pre>
 <p><br></p>
 </div>
 <div id="task-4" class="section level2">
 <h2>Task 4</h2>
-<pre class="r"><code>matrix(c(1, 2, 3, 4, 5, 6), nrow=2, ncol=3, byrow=TRUE)</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    1    2    3
-## [2,]    4    5    6</code></pre>
+<pre class="r"><code>task4 = matrix(c(1, 2, 3, 4, 5, 6), nrow=2, ncol=3, byrow=TRUE)</code></pre>
 <p><br></p>
 </div>
 <div id="task-5" class="section level2">
 <h2>Task 5</h2>
 <pre class="r"><code>task5x = runif(1000, min=0, max=1)
 task5y = runif(1000, min=0, max=1)
-task5pi = sqrt(task5x^2+task5y^2)
-lessthanone = task5pi &lt;= 1
-fraction = sum(lessthanone)/1000
-fraction</code></pre>
-<pre><code>## [1] 0.798</code></pre>
+length = sqrt(task5x^2+task5y^2)
+lessthanone = length &lt;= 1
+task5pi = 4*(sum(lessthanone)/1000)</code></pre>
 </div>
 <div id="test-statements" class="section level2">
 <h2>Test statements</h2>
-<p>Show in New WindowClear OutputExpand/Collapse Output [1] “Today is Wed Jan 25 19:10:22 2017”</p>
 <pre class="r"><code>scoreActivity::score253(1)</code></pre>
 <pre><code>## --------
 ## Running test statements for day  01</code></pre>
 <pre><code>## Loading required package: scoreActivity</code></pre>
 <pre><code>## Loading required package: lazyeval</code></pre>
-<pre><code>## Warning in if (abs(expr - match$x) &lt; match$pm) wins &lt;- TRUE: the condition
-## has length &gt; 1 and only the first element will be used</code></pre>
-<pre><code>## FAILED: &quot;package:mosaic&quot; %in% search()
-## ERROR when running  check(TRUE, is.character(task2))
-## ERROR when running  check(TRUE, grepl(&quot;^Today is&quot;, task2) &amp;&amp; grepl(&quot;201.$&quot;, task2))
-## ERROR when running  check(TRUE, all(task3a %in% names(mosaicData::Galton)))
-## ERROR when running  check(nrow(mosaicData::Galton), task3b)
-## ERROR when running  check(about(mean(mosaicData::Galton$height)), task3c)
-## ERROR when running  check(TRUE, all(dim(task4) == c(2, 3)))
+<pre><code>## Warning in if (match == expr) wins &lt;- TRUE: the condition has length &gt; 1
+## and only the first element will be used</code></pre>
+<pre><code>## passed: &quot;package:mosaic&quot; %in% search()
+## passed: is.character(task2)
+## passed: grepl(&quot;^Today is&quot;, task2) &amp;&amp; grepl(&quot;201.$&quot;, task2)
+## passed: all(task3a %in% names(mosaicData::Galton))
+## passed: task3b
+## passed: task3c
+## passed: all(dim(task4) == c(2, 3))
 ## passed: max(task5x) &lt;= 1 &amp;&amp; min(task5x) &gt;= 0
 ## passed: max(task5y) &lt;= 1 &amp;&amp; min(task5y) &gt;= 0
-## FAILED: task5pi</code></pre>
-</div>
-<div id="test-statements-1" class="section level2">
-<h2>Test statements</h2>
-<pre class="r"><code>scoreActivity::score253(1)</code></pre>
-<pre><code>## --------
-## Running test statements for day  01</code></pre>
-<pre><code>## Warning in if (abs(expr - match$x) &lt; match$pm) wins &lt;- TRUE: the condition
-## has length &gt; 1 and only the first element will be used</code></pre>
-<pre><code>## FAILED: &quot;package:mosaic&quot; %in% search()
-## ERROR when running  check(TRUE, is.character(task2))
-## ERROR when running  check(TRUE, grepl(&quot;^Today is&quot;, task2) &amp;&amp; grepl(&quot;201.$&quot;, task2))
-## ERROR when running  check(TRUE, all(task3a %in% names(mosaicData::Galton)))
-## ERROR when running  check(nrow(mosaicData::Galton), task3b)
-## ERROR when running  check(about(mean(mosaicData::Galton$height)), task3c)
-## ERROR when running  check(TRUE, all(dim(task4) == c(2, 3)))
-## passed: max(task5x) &lt;= 1 &amp;&amp; min(task5x) &gt;= 0
-## passed: max(task5y) &lt;= 1 &amp;&amp; min(task5y) &gt;= 0
-## FAILED: task5pi</code></pre>
+## passed: task5pi</code></pre>
 </div>
 </div>
 
