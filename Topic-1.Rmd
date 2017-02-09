@@ -196,6 +196,7 @@ auto$origin = as.factor(auto$origin)
 pairs(auto)
 ```
 <br>
+<br>
 
 It seems like displacement and weight were not used as predictors because they have a strong relationship with each other.
 <br>
