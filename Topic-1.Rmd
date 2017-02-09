@@ -1,2 +1,212 @@
 # Topic 1 Exercises
 
+## Aveline Marshall
+
+Discussion questions: ISL 2.4.1, 2.4.3, 2.4.6
+Computing assignment: ISL 2.4.8, 2.4.9
+Theory assignment: ISL 2.4.2, 2.4.7
+
+### 2.4.1
+
+(a) We would generally expect the performance of a flexible statistical learning method to be better if the sample size is extremely large and the number of predictors is small because a flexible model allows you to take full advantage of a large sample size. Because of the large sample size, we are less likely to overfit even when using a more flexible model. 
+<br>
+
+(b) We would generally expect the performance of a flexible model to be worse if the if the number of predictors is large and the number of observations is large. A flexible model would cause overfitting because of the small sample size. This would be more variance and not enough reduction in bias for flexibility to be considered beneficial.
+<br>
+
+(c) If the relationship between the predictors and the response is highly non-linear, a flexible model will be better in general because it is necessary to use a flexible model to find the non-linear effect. 
+<br>
+
+(d) If the variance of the errors is large, an inflexible model would be better in general, because a flexible model would try to account for too much of the noise in the data that is created because of he large variance in the errors.
+
+<br>
+
+### 2.4.2
+
+(a) This is a regression problem as the output value takes continuous values. We are interested in inference, because instead of wanting to predict a future CEO's salary, we are interested in understanding which factors affect CEO salary. The number of observations, n, is 500 firms. The number of predictors, p, is three (profit, number of employees, and industry).
+<br>
+
+(b) This is a classification problem as the output variable takes class labels. We are interested in prediction, as we are wishing to know whether the product will succeed or fail. The number of observations, n, is 20 similar products. The number of predictors, p, is thirteen (price, marketing budget, competition price, and ten other variables). 
+<br>
+
+(c) This is a regression problem as the output variable as the output value takes continuous values. We are interested in predicting the % change in the US dollar. The number of observations, n, is 52 weeks in 2012. The number of predictors, p, is three (% change in the US market, % change in the British market, and the % change in the German market).
+
+### 2.4.3
+
+```{r}
+#![oooo.](/home/local/MAC/amarsha1/MACHINE LEARNING/Math-253-AssignmentsSSH/flexibilityGraph.jpg)
+```
+
+### 2.4.6
+
+A parametric model first makes an assumption about the form/shape of f (for example assuming that f will be a linear model). After, a parametric model uses the training data to estimate the parameters of the model that we are creating that will make it more similar to the true f. The main difference between a parametric model and a non-parametric model is the assumption of the form/shape of f. A non-parametric model instead attemps to create an estimate of f that comes as close to the data points as possible. The advantages of a parametric model is that assuming the shape of f means we only have to estimate the parameters, which is generally much easier. However, a disadvantage of a parametric model is that the model we choose will not match the true f as well as we would like. The advantages of a non-parametric model is that it has the potential of accurately fiting a wider range of possible shapes for f. However, non-parametric models do not reduce the estimation of f to estimating parameters, so a very large number of observations is required to form an accurate estimate. 
+
+### 2.4.7
+
+#### (a)
+
+```{r}
+euclid = matrix(c('0','3','0','red','3','2','0','0','red','2','0','1','3','red','3.16','0','1','2','green','2.23','-1','0','1','green','1.41', '1','1','1', 'red', '1.73'), ncol=5,byrow=TRUE)
+colnames(euclid)= c("X1",'X2','X3','Y','Distance')
+euclid=as.table(euclid)
+euclid
+```
+<br>
+
+#### (b)
+
+If K=1, then x5 in an element of N0 and we have
+<br>
+<br>
+P(Y=Red|X = x0) = I(y5=Red) = 0
+<br>
+P(Y=Green|X=x0) = I(y5=Green) = 1
+<br>
+<br>
+Our prediction is Green.
+<br>
+
+#### (c)
+
+If K=3, then x2, x5, and x6 are elemts of N0 and we have
+<br>
+<br>
+P(Y=Red|X=x0) = 1/3(1+0+1) = 2/3
+<br>
+P(Y=Green|X=x0) = 1/3(0+1+0) = 1/3
+<br>
+<br>
+Our prediction is Red.
+<br>
+
+#### (d)
+
+If the Bayes decision boundary is this problem is highly non-linear, we would expect the best value for K to be small. This is because as K becomes larger, the boundary becomes inflexible/linear.
+
+### 2.4.8
+
+#### (a)
+
+```{r}
+library(ISLR)
+download.file("http://www-bcf.usc.edu/~gareth/ISL/College.csv", destfile="College.csv")
+auto_file_name = "/home/local/MAC/amarsha1/MACHINE LEARNING/Math-253-AssignmentsSSH/College.csv"
+college = read.csv("/home/local/MAC/amarsha1/MACHINE LEARNING/Math-253-AssignmentsSSH/College.csv")
+```
+<br>
+
+#### (b)
+
+```{r}
+head(college[, 1:5])
+```
+```{r}
+rownames = college[, 1]
+college = college[, -1]
+head(college[, 1:5])
+```
+<br>
+
+#### (c)
+
+```{r}
+summary(college)
+```
+
+```{r}
+pairs(college[, 1:10])
+```
+```{r}
+plot(college$Private, college$Outstate, xlab = "Private University", ylab ="Out of State tuition", main = "Outstate Tuition")
+```
+```{r}
+Elite = rep("No", nrow(college))
+Elite[college$Top10perc > 50] = "Yes"
+Elite = as.factor(Elite)
+college$Elite = Elite
+summary(college$Elite)
+```
+```{r}
+plot(college$Elite, college$Outstate, xlab = "Elite University", ylab ="Out of State tuition", main = "Outstate Tuition")
+```
+```{r}
+par(mfrow = c(2,2))
+hist(college$Books, xlab = "Books", ylab = "Count")
+hist(college$PhD, xlab = "PhD", ylab = "Count")
+hist(college$Grad.Rate, xlab = "Grad Rate", ylab = "Count")
+hist(college$perc.alumni, xlab = "% alumni", ylab = "Count")
+```
+```{r}
+summary(college$Top10perc)
+```
+
+### 2.4.9
+
+#### (a)
+
+```{r}
+download.file("http://www-bcf.usc.edu/~gareth/ISL/Auto.csv", destfile="Auto.csv")
+auto_file_name = "/home/local/MAC/amarsha1/MACHINE LEARNING/Math-253-AssignmentsSSH/Auto.csv"
+Auto = read.csv("/home/local/MAC/amarsha1/MACHINE LEARNING/Math-253-AssignmentsSSH/Auto.csv")
+auto = read.csv("Auto.csv", na.strings = "?")
+auto = na.omit(auto)
+str(auto)
+```
+<br>
+The only qualitative variables are "horsepower" and "name".
+<br>
+
+#### (b)
+
+```{r}
+summary(auto[, -c(4, 9)])
+```
+<br>
+
+#### (c)
+
+```{r}
+sapply(auto[, -c(4, 9)], mean)
+```
+```{r}
+sapply(auto[, -c(4, 9)], sd)
+```
+<br>
+
+#### (d)
+
+```{r}
+subset = auto[-c(10:85), -c(4,9)]
+sapply(subset, range)
+```
+```{r}
+sapply(subset, mean)
+```
+```{r}
+sapply(subset, sd)
+```
+<br>
+
+#### (e)
+
+```{r}
+auto$cylinders = as.factor(auto$cylinders)
+auto$year = as.factor(auto$year)
+auto$origin = as.factor(auto$origin)
+pairs(auto)
+```
+<br>
+
+It seems like displacement and weight were not used as predictors because they have a strong relationship with each other.
+<br>
+
+#### (f)
+
+From the plots above, it seems like the cylinders, horsepower, year, and origin can be used as predictors.
+
+
+
+
+
+
+
