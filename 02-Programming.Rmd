@@ -24,6 +24,7 @@ Auto = read.csv("/home/local/MAC/amarsha1/MACHINE LEARNING/Math-253-AssignmentsS
 
 ```{r}
 task3 = summary(Auto$horsepower)
+task3
 ```
 
 <br>
@@ -37,6 +38,15 @@ library(ISLR)
 <br>
 
 ## Task 5
+
+```{r}
+task5top = Auto[c(1:5),c(1:3)]
+task5top
+task5bottom = Auto[c(393:397),c(7:9)]
+task5bottom
+```
+
+## Task 6
 
 ```{r}
 
