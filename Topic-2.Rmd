@@ -1,5 +1,5 @@
 # Topic 2 Exercises: Linear Regression
-# Meghan Roffler
+# Aveline Marshall
 
 
 ##3.6
