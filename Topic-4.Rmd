@@ -1,2 +1,179 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
 # Topic 4 Exercises: Classification
+## Aveline Marshall
 
+##4.7.1
+(4.2) <- p(X) = eβ0+β1X/(1+eβ0+β1X)
+(4.3) <- p(X)/(1−p(X)) = eβ0+β1X
+
+If we want to prove that they're equivalent, we first set eβ0+β1X to y.
+That means 
+(4.2) <-  P(X) = Y/(1+Y)  <-  P(X)(1+Y) = Y  <-  P(X)+P(X)Y = Y  <-  P(X) = Y-P(X)Y  <-  
+P(X) = Y(1-P(X))  <-  P(X)/(1-P(X)) = Y
+
+Plug eβ0+β1X back in and you get P(X)/(1-P(X)) = eβ0+β1X which is (4.3)
+
+
+##4.7.8
+
+When we use the KNN method with K=1, we know that the training error rate is 0% because P(Y=j|X=xi)=I(yi=j). This means that the test error rate can be as high as 36% since the average error is 18%. Since the test error rate for KNN (36%) is most likely higher than the error for logistic regression (30%), we would prefer the logistic regression method. 
+ 
+ 
+##4.7.9
+a) Odds = P(X)/(1-P(X))  ->  0.37 = P(X)/(1-P(X))  ->  0.37 = 1.37P(X)  -> P(X) = 0.27. 
+On average, 27% of people default. 
+
+b) Odds = P(X)/(1-P(X))  ->  Odds = 0.16/0.84 = 0.19
+The odds that she will default are 19%. 
+
+##4.7.11
+
+```{r}
+##part a
+library(ISLR)
+library(MASS)
+#Auto <- read.csv("/home/local/MAC/jpark2/Math-253-Assignments/Auto.csv")
+
+Auto$mpg01 <- with(ifelse(mpg > median(mpg), 1, 0), data=Auto)
+```
+##part b
+
+```{r}
+pairs(Auto[,-9])
+boxplot(with(Auto, cylinders ~ mpg01), main = "Cylinders vs mpg01", xlab = "mpg01", ylab = "Cylinders")
+boxplot(Auto$weight ~ Auto$mpg01, main = "Weight vs mpg01", xlab = "mpg01", ylab = "Weight")
+boxplot(Auto$acceleration ~ Auto$mpg01, main = "Acceleration vs mpg01", xlab = "mpg01", ylab = "Acceleration")
+boxplot(Auto$displacement ~ Auto$mpg01, main = "Displacement vs mpg01", xlab = "mpg01", ylab = "Displacement")
+boxplot(Auto$origin ~ Auto$mpg01, main = "Origin vs mpg01", xlab = "mpg01", ylab = "Origin")
+boxplot(Auto$year ~ Auto$mpg01, main = "Year vs mpg01", xlab = "mpg01", ylab = "Year")
+```
+#We may conclude that there exists some association between “mpg01” and “cylinders”, “weight”, “displacement”. 
+
+##part c
+```{r}
+set.seed(1)
+inds <- sample(1:nrow(Auto), size = nrow(Auto)/2)
+trainSet <- Auto[inds, ]
+testSet <- Auto[-inds, ]
+```
+
+##part d
+```{r}
+lda.fit <- lda(mpg01 ~ displacement + weight + cylinders, data = trainSet)
+lda.pred <- predict(lda.fit, testSet)
+table(testSet$mpg01, lda.pred$class)
+
+sum(lda.pred$class!=testSet$mpg01)/nrow(testSet)
+```
+## We have a test error rate of around 10.2%
+
+##part e
+```{r}
+qda.fit <- qda(mpg01 ~ displacement + weight + cylinders, data = trainSet)
+qda.pred <- predict(qda.fit, testSet)
+table(testSet$mpg01, qda.pred$class)
+sum(qda.pred$class != testSet$mpg01)/nrow(testSet)
+```
+## We have a test error rate of around 9.18%
+
+##part f
+```{r}
+logReg <- glm(mpg01 ~ displacement + weight + cylinders, data = trainSet, family = "binomial")
+summary(logReg)
+logReg.probs <- predict(logReg, testSet, type="response")
+logReg.pred <- ifelse(logReg.probs > 0.5, 1, 0)
+table(logReg.pred, testSet$mpg01)
+mean(logReg.pred != testSet$mpg01)
+```
+## We have a test error rate of around 10.2%
+
+##part g
+```{r}
+set.seed(1)
+training <- trainSet[,c("displacement", "weight", "cylinders")]
+testing <- testSet[,c("displacement", "weight", "cylinders")]
+library(class)
+knn.pred <- class::knn(training, testing, trainSet$mpg01, k = 1)
+table(knn.pred, testSet$mpg01)
+mean(knn.pred != testSet$mpg01)
+knn.pred <- class::knn(training, testing, trainSet$mpg01, k = 2)
+table(knn.pred, testSet$mpg01)
+mean(knn.pred != testSet$mpg01)
+knn.pred <- class::knn(training, testing, trainSet$mpg01, k = 3)
+table(knn.pred, testSet$mpg01)
+mean(knn.pred != testSet$mpg01)
+knn.pred <- class::knn(training, testing, trainSet$mpg01, k = 4)
+table(knn.pred, testSet$mpg01)
+mean(knn.pred != testSet$mpg01)
+knn.pred <- class::knn(training, testing, trainSet$mpg01, k = 5)
+table(knn.pred, testSet$mpg01)
+mean(knn.pred != testSet$mpg01)
+knn.pred <- class::knn(training, testing, trainSet$mpg01, k = 6)
+table(knn.pred, testSet$mpg01)
+mean(knn.pred != testSet$mpg01)
+knn.pred <- class::knn(training, testing, trainSet$mpg01, k = 7)
+table(knn.pred, testSet$mpg01)
+mean(knn.pred != testSet$mpg01)
+knn.pred <- class::knn(training, testing, trainSet$mpg01, k = 8)
+table(knn.pred, testSet$mpg01)
+mean(knn.pred != testSet$mpg01)
+knn.pred <- class::knn(training, testing, trainSet$mpg01, k = 9)
+table(knn.pred, testSet$mpg01)
+mean(knn.pred != testSet$mpg01)
+knn.pred <- class::knn(training, testing, trainSet$mpg01, k = 10)
+table(knn.pred, testSet$mpg01)
+mean(knn.pred != testSet$mpg01)
+```
+
+## Around K=7
+
+##4.7.13
+
+```{r}
+library(MASS)
+Boston$crim01 <- ifelse(Boston$crim > median(Boston$crim), 1, 0)
+boxplot(with(Boston, indus ~ crim01), main = "indus vs crim01", xlab = "crim01", ylab = "indus")
+boxplot(with(Boston, nox ~ crim01), main = "nox vs crim01", xlab = "crim01", ylab = "nox")
+boxplot(with(Boston, age ~ crim01), main = "age vs crim01", xlab = "crim01", ylab = "age")
+boxplot(with(Boston, dis ~ crim01), main = "dis vs crim01", xlab = "crim01", ylab = "dis")
+boxplot(with(Boston, tax ~ crim01), main = "tax vs crim01", xlab = "crim01", ylab = "tax")
+boxplot(with(Boston, lstat ~ crim01), main = "lstat vs crim01", xlab = "crim01", ylab = "lstat")
+boxplot(with(Boston, black ~ crim01), main = "black vs crim01", xlab = "crim01", ylab = "black")
+boxplot(with(Boston, rad ~ crim01), main = "rad vs crim01", xlab = "crim01", ylab = "rad")
+boxplot(with(Boston, ptratio ~ crim01), main = "ptratio vs crim01", xlab = "crim01", ylab = "ptratio")
+boxplot(with(Boston, medv ~ crim01), main = "medv vs crim01", xlab = "crim01", ylab = "medv")
+
+
+set.seed(1)
+inds1 <- sample(1:nrow(Boston), size = nrow(Boston)/2)
+boston.train <- Boston[inds1, ]
+boston.test <- Boston[-inds1, ]
+
+
+#LDA Model = 16.99% Test Error
+lda.fit1 <- lda(crim01 ~ zn + indus + nox + age + dis + tax + lstat + black +  rad + ptratio + medv, data = boston.train)
+lda.pred1 <- predict(lda.fit1, boston.test)
+
+mean(lda.pred1$class!=boston.test$crim01)
+
+
+#Logistic Regression = 11.86% Test Error
+logreg1 <- glm(crim01 ~ zn + indus + nox + age + dis + tax + lstat + black +  rad + ptratio + medv, data = boston.train, family = "binomial")
+summary(logreg1)
+logreg.probs <- predict(logreg1, boston.test, type="response")
+logreg.pred <- ifelse(logreg.probs > 0.5, 1, 0)
+
+mean(logreg.pred != boston.test$crim01)
+
+
+#KNN Model = 9.09% Test Error 
+trainingBoston <- boston.train[,c("zn", "indus", "nox", "age", "dis", "tax", "lstat", "black", "rad", "ptratio", "medv")]
+testingBoston <- boston.test[,c("zn", "indus", "nox", "age", "dis", "tax", "lstat", "black", "rad", "ptratio", "medv")]
+knn.pred <- class::knn(trainingBoston, testingBoston, boston.train$crim01, k=1)
+table(knn.pred, boston.test$crim01)
+mean(knn.pred != boston.test$crim01)
+```
