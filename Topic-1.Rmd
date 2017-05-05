@@ -1,0 +1,116 @@
+# Topic 1 Exercises
+# Aveline Marshall
+
+## Discussion Questions
+
+### ISL 2.4.1
+(a) (The sample size n is incredibly large, and the number of predictors p is small.) In this case, we would generally expect the performance of a flexible statistical learning method to be better than an inflexible method. This is because the large sample size allows the flexible method to better fit the data than the inflexible method.
+
+(b) (The number of predictors p is extremely large, and the number of observations n is small.) In this case, we would generally expect the performance of a flexible statistical learning method to be worse than the inflexible method because the flexible method would lead to overfitting due to the small sample size.
+
+(c) (The relationship between the predictors and response is highly non-linear.) In this case, we would generally expect the performance of the flexible statistical learning method to be better than the inflexible method because the flexibility allows it to better fit the data.
+
+(d) (The variance of the error terms is extremely high.) In this case, we would generally expect the performance of the flexible statistical learning method to be worse than the inflexible method because the large variance of the error terms causes the flexible models to capture too much of the noise in the data.
+
+### ISL 2.4.3
+(a)
+
+
+(b) Bias decreases with higher flexibility. For this reason, the squared bias curve decreases at at a decreasing rate until it reaches some minimum value. Variance tends to increase with higher flexibility. For this reason, the variance curve is increasing at an increasing rate. The training error curve decreases as the flexibility increases due to the fact that the curve better fits the data. The test error curve is U-shaped. This is because as the flexibility increases, the test error drops to a certain minimum value. However, after that minimum point, the training error starts to rise as the more flexible models start to overfit the data. The Bayes (or irreducible) error curves is constant and is thus represented by a horizoatal line.
+
+### ISL 2.4.6
+Describe the differences between a parametric and non-parametric statistical learning approach. What are the advantages of a parametric approach to regression or classification (as opposed to a non-parametric approach)? What are its disadvantages?
+
+Non-parametric methods do not make explicit assumptions about the functional form of f. They seek an estimate of f that gets as close to the data points as possible withough being too rough or wiggly. On the other hand, parametric methods reduce the problem of estimating f down to one by estimating a set of parameters. An advantage of a parametric approach to regression or classification is that the parametric approach is more flexible and can thus fit more kinds of data. The parametric approach can be used with a simple model whereas a non-parametric approach requires lots of parameters and observations. Some disadvantages of the parametric approach are that it might overfit the data and requires more assumptions, which could lead to errors.
+
+
+## Computing Assignment
+### ISL 2.4.8
+(a)
+```{r}
+college <- read.csv("/home/local/MAC/jpark2/Math-253-Assignments/College.csv", header = TRUE)
+```
+
+(b) SKIP
+```{r}
+#rownames(college) <- college[,1]
+#fix(college)
+```
+
+```{r}
+#college <- college[ ,-1]
+#fix(college)
+```
+
+(c) 
+(i)
+```{r}
+summary(college)
+```
+
+(ii)
+```{r}
+pairs(college[, 1:10]) #scatterplot matrix of first ten columns of matrix
+```
+
+(iii)
+```{r}
+boxplot(college$Outstate ~ college$Private, col=c("red", "blue"), main ="Outstate vs Private", xlab = "Private", ylab = "Outstate")
+```
+
+(iv) There are 78 elite colleges and 699 non-elite colleges.
+
+```{r}
+Elite <- rep("no", nrow(college))
+Elite[college$Top10perc > 50] = "Yes"
+Elite <- as.factor(Elite)
+college <- data.frame(college, Elite)
+summary(college)
+boxplot(college$Outstate ~ college$Elite, col=c("red", "blue"), main ="Outstate vs Elite", xlab = "Elite", ylab = "Outstate")
+```
+
+(v)
+```{r}
+par(mfcol = c(2,3))
+hist(college$Accept, breaks = 10, freq = TRUE, col = "red", main = "Histogram", xlab = "Accept")
+hist(college$Top10perc, breaks = 10, freq = TRUE, col = "red", main = "Histogram", xlab = "Top10perc")
+hist(college$Top25perc, breaks = 10, freq = TRUE, col = "red", main = "Histogram", xlab = "Top25perc")
+hist(college$Enroll, breaks = 10, freq = TRUE, col = "red", main = "Histogram", xlab = "Enroll")
+hist(college$Apps, breaks = 10, freq = TRUE, col = "red", main = "Histogram", xlab = "Apps")
+hist(college$Expend, breaks = 10, freq = TRUE, col = "red", main = "Histogram", xlab = "Expend")
+
+```
+
+(vi) 
+```{r}
+summary(college$Top10perc)
+summary(college$Top25perc)
+summary(college$Apps)
+summary(college$Accept)
+```
+
+The histograms for Accept, Apps, and Top10perc appear to be heavily skewed to the right whereas the histograms for the Top25pec and Expend appear slightly more normal.
+
+### ISL 2.4.9
+```{r}
+Auto <- read.csv("/home/local/MAC/jpark2/Math-253-Assignments/Auto.csv")
+Auto <- na.omit(Auto)
+str(Auto)
+```
+
+(a) Quantitative Predictors: mpg, cylinders, displacement, weight, acceleration, year, origin
+
+Qualitatitive Predictors: horsepower, name
+
+(b)
+```{r}
+range(Auto$mpg)
+range(Auto$cylinders)
+range(Auto$displacement)
+range(Auto$weight)
+range(Auto$acceleration)
+range(Auto$year)
+range(Auto$origin)
+```
+Range of mpg: (9, 46.6)
+
