@@ -133,5 +133,91 @@ b)
 eps <- rnorm(100, sd = sqrt(0.25))
 ```
 
+c)
+```{r}
+y <- -1 + 0.5*x + eps
+length(y)
+```
+β0 = -1
+β1 = 0.5
+
+d) 
+```{r}
+plot(x,y)
+```
+There seems to be a linear relationship with some noise created by the eps variable. 
+
+e) 
+```{r}
+linfit <- lm(y ~ x)
+summary(linfit)
+```
+The β0hat = -1.01 and β1hat = 0.499 are close to β0 = -1 and β1 = 0.5. This model has very low (near zero) p values which means we can reject null hypothesis.
+
+f) 
+```{r}
+plot(x, y)
+abline(linfit, col = "red")
+abline(-1, 0.5, col = "blue")
+legend("topleft", c("Least square", "Regression"), col = c("red", "blue"), lty = c(1, 1))
+```
+
+g)
+```{r}
+polyfit <- lm(y ~ x + I(x^2))
+summary(polyfit)
+```
+We see from the summary that the p value for x^2 is above 0.05 so it is not significant. This means there isn't sufficient evidence that the quadratic term improves the model.
+
+h) 
+```{r}
+set.seed(1)
+eps <- rnorm(100, sd = 0.1)
+x <- rnorm(100)
+y <- -1 + 0.5 * x + eps
+plot(x, y)
+linfit1 <- lm(y ~ x)
+summary(linfit1)
+abline(linfit1, col = "red")
+abline(-1, 0.5, col = "blue")
+legend("topleft", c("Least square", "Regression"), col = c("red", "blue"), lty = c(1, 1))
+```
+I reduced noise by decreasing the variance of the normal distribution used to generate the error term. Now we have a higher R^2 and lower RSE.
+
+i) 
+```{r}
+set.seed(1)
+eps <- rnorm(100, sd = 20)
+x <- rnorm(100)
+y <- -1 + 0.5 * x + eps
+plot(x, y)
+linfit2 <- lm(y ~ x)
+summary(linfit2)
+abline(linfit2, col = "red")
+abline(-1, 0.5, col = "blue")
+legend("topleft", c("Least square", "Regression"), col = c("red", "blue"), lty = c(1, 1))
+```
+I increased noise by increasing the variance of the normal distribution used to generate the error term. The relationship is no longer as linear as before, and we have a lower R^2 and higher RSE. Also we can see from the plot that the least square line is further apart from the regression line.
+
+j) 
+```{r}
+original = confint(linfit)
+lessnoise = confint(linfit1)
+morenoise = confint(linfit2)
+
+original
+lessnoise
+morenoise
+```
+All intervals are centered on approximately 0.5. As the noise increases, the confidence intervals widen. With less noise, confidence intervals get more narrow.
+
+
+
+##On p. 66 the authors state, “This is clearly not true in Fig. 3.1” Explain why.
+For these formulas to be strictly valid, we need to assume that the errors i for each observation are uncorrelated with common variance σ2. This is clearly not true in Figure 3.1, but the formula still turns out to be a good approximation. We know this because for lower values of TV, the residuals are smaller while for larger values of TV, the residuals are higher. 
+
+##On p. 77 the authors state, “In this case we cannot even fit the multiple regression models using least squares ….” Explain why.
+
+This is because sometimes we have a very large number of variables. If p>n then there are more coefficients βj to estimate than observations from which to estimate them. In this case we cannot even fit the multiple linear regression model using least squares. In other words, when there are more coefficients than cases, there will be an infinite number of solutions all with no residuals. 
 
 
